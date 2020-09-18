@@ -6,7 +6,6 @@ import se.edu.inclass.task.Task;
 import se.edu.inclass.task.TaskNameComparator;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -17,10 +16,19 @@ public class Main {
         ArrayList<Task> tasksData = dm.loadData();
 
         System.out.println("Printing deadlines");
-        printDeadlines(tasksData);
+        printDeadlineUsingStream(tasksData);
 
-        System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
+        System.out.println("Total number of deadlines: " + countDeadlinesUsingStreams(tasksData));
+        printDataUsingStream(tasksData);
+    }
 
+    public static int countDeadlinesUsingStreams(ArrayList<Task> tasksData) {
+        System.out.println("Calculating count using streams");
+        int count;
+        count = (int) tasksData.stream()
+                .filter((t) -> t instanceof Deadline)
+                .count();
+        return count;
     }
 
     private static int countDeadlines(ArrayList<Task> tasksData) {
@@ -37,6 +45,20 @@ public class Main {
         for (Task t : tasksData) {
             System.out.println(t);
         }
+    }
+
+    public static void printDataUsingStream(ArrayList<Task> taskData) {
+        System.out.println("Print data using streams");
+        taskData.stream()
+                .forEach(System.out::println); //println function from system.out object
+
+    }
+
+    public static void printDeadlineUsingStream(ArrayList<Task> taskData) {
+        System.out.println("Deadline using stream");
+        taskData.stream()
+                .filter((t) -> t instanceof Deadline)
+                .forEach(System.out::println);
     }
 
     public static void printDeadlines(ArrayList<Task> tasksData) {
